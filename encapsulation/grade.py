@@ -16,3 +16,14 @@ if __name__ == '__main__':
     g.setGrade(90, 85, 78)
     print(g.avg())
     print(g.sum())
+
+
+class bmi:
+
+    def setState(self,hei , wei):
+        self.hei = hei
+        self.wei = wei
+
+    def bmiCal(self):
+        return self.hei/(self.wei*self.wei)
+
