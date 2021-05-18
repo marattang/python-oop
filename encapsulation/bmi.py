@@ -1,14 +1,44 @@
-class Bmi:
+def bmi_function(height, weight):
+    return weight/height ** 2 * 10000
 
-    def setState(self, hei, wei):
-        self.hei = hei
-        self.wei = wei
+class Bmi(object):
 
-    def bmiCal(self):
-        hei_2 = self.hei / 100
-        return self.wei / (hei_2 * hei_2)
+    def __init__(self, height, weight):
+        self.height = height
+        self.weight = weight
 
-if __name__ == '__main__':
-    b = Bmi()
-    b.setState(155, 52)
-    print(b.bmiCal())
+    def get_bmi(self):
+        bmi = ''
+        index = self.weight/self.height **2 * 10000
+        if index >= 35:
+            bmi = '고도 비만'
+        elif index >= 30:
+            bmi = '중도 비만'
+        elif index >= 25:
+            bmi = '경도 비만'
+        elif index >= 23:
+            bmi = '과체중'
+        elif index >= 18.5:
+            bmi = '정상'
+        else :
+            bmi = '저체중'
+
+        return bmi
+    '''
+    고도 비만 : 35 이상
+    중(重)도 비만 (2단계 비만) : 30 - 34.9
+    경도 비만 (1단계 비만) : 25 - 29.9
+    과체중 : 23 - 24.9
+    정상 : 18.5 - 22.9
+    저체중 : 18.5 미만
+    '''
+    @staticmethod
+    def main():
+        b = Bmi(int(input('키를 입력하세요')), int(input('몸무게를 입력하세요')))
+
+        print(f' height : {b.height}')
+        print(f' weight : {b.weight}')
+        print(f' bmi : {b.get_bmi()}')
+
+
+Bmi.main()
