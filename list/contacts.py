@@ -14,6 +14,12 @@ class Contacts(object):
         return f'주소록 : 이름 {self.name}, 전화번호 {self.phone}, 이메일 {self.email}, 주소 {self.address}'
 
     @staticmethod
+    def del_contacts(ls, name):
+        for i, j in enumerate(ls):
+            if j.name == name:
+                del ls[i]
+
+    @staticmethod
     def main():
         ls = []
         while 1:
@@ -26,16 +32,13 @@ class Contacts(object):
                 for i in ls:
                     print(f'출력결과 : {i.print_contacts()}')
             elif menu == '3':
-                del_name = input('삭제할 이름 : ')
-                for i, j in enumerate(ls):
-                    if j.name == del_name:
-                        del ls[i]
+                name = input('삭제할 이름 : ')
+                Contacts.del_contacts(ls, name)
             elif menu == '4':
-                re_name = input('수정할 이름 : ')
-                for i, j in enumerate(ls):
-                    if j.name == re_name:
-                        
-
+                name = input('수정할 이름 : ')
+                contacts = Contacts(name, input('수정할 전화번호'), input('수정할 이메일'), input('수정할 주소'))
+                Contacts.del_contacts(ls, name)
+                ls.append(contacts)
             else :
                 print('다시 입력해주세요.')
                 continue
