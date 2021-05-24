@@ -31,7 +31,6 @@ class Account(object):
 
     def deposit(self):
         acct_amt = int(input('입금할 금액을 입력해주세요'))
-        act = '입금'
         if acct_amt >= 1:
 
             for i in self.depo_account:
@@ -41,26 +40,24 @@ class Account(object):
                         self.acct_amt = self.acct_amt + self.acct_amt * 0.01
 
             self.acct_amt = acct_amt + self.acct_amt
-            self.account_history(acct_amt, act)
+            self.account_history(acct_amt)
         else:
             print('금액은 1원 이상 입력해주셔야 합니다.')
         return self.acct_amt
 
     def withdraw(self):
         acct_amt = int(input('출금할 금액을 입력해주세요'))
-        act = '출금'
         if acct_amt >= 1:
             if self.acct_amt < acct_amt :
                 print('잔액이 부족합니다')
             else :
                 self.acct_amt = self.acct_amt - acct_amt
-                self.account_history(acct_amt, act)
+                self.account_history(acct_amt)
         else:
             print('금액은 1원 이상 입력해주셔야 합니다.')
         return self.acct_amt
 
-    def account_history(self, acct_amt, act):
-        print(f'{acct_amt}원 만큼 {act}합니다.')
+    def account_history(self, acct_amt):
         print(f'{self.acct_cu}고객의 잔액은 {self.acct_amt}원 입니다.')
 
     @staticmethod
