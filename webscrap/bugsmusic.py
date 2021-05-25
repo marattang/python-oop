@@ -4,15 +4,15 @@ from urllib.request import urlopen
 class BugsMusic(object):
 
     url = ''
+    class_name = []
 
     def __str__(self):
         return f'입력된 URL은 {self.url}입니다.'
     
-    #리스트를 파라미터로 전달해서 출력하기
-    @staticmethod
-    def printRanking(soup):
-        pattern = ['title', 'artist']
-        for j in pattern:
+    #리스트를 출력하기
+    def printRanking(self):
+        soup = BeautifulSoup(urlopen(self.url), 'lxml')
+        for j in self.class_name:
             count = 0
             print(f'-------------------{j} Ranking----------------------')
             for i in soup.find_all(name='p', attrs=({"class": j})):
@@ -32,9 +32,9 @@ class BugsMusic(object):
                 bugs.url = input('Input URL')
             elif menu == '2':
                 print(f'Input URL is {bugs}')
-                soup = BeautifulSoup(urlopen(bugs.url), 'lxml')
-
-                BugsMusic.printRanking(soup)
+                bugs.class_name.append("artist")
+                bugs.class_name.append('title')
+                bugs.printRanking()
             elif menu == '3':
                 pass
             elif menu == '4':

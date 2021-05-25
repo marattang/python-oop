@@ -4,17 +4,27 @@ import urllib.request
 class Melon(object):
 
     url = ''
+    hdr = {'User-Agent': 'Mozilla/5.0'}
+    class_name = []
 
     def __str__(self):
         return f'입력된 URL은 {self.url}입니다.'
 
-    @staticmethod
-    def printRanking(soup, value, type):
+    def printRanking(self):
+        req = urllib.request.Request(self.url, headers=self.hdr)
+        soup = BeautifulSoup(urllib.request.urlopen(req).read(), 'lxml')
+
         count = 0
-        for i in soup.find_all(name='div', attrs=({"class":value})):
+        for i in soup.find_all(name='div', attrs=({"class":self.class_name[0]})):
             count += 1
             print(f'{str(count)} RANKING')
-            print(f'{type}: {i.find("a").text}')
+            print(f'title1: {i.find("a").text}')
+
+        count = 0
+        for i in soup.find_all(name='div', attrs=({"class":self.class_name[1]})):
+            count += 1
+            print(f'{str(count)} RANKING')
+            print(f'artist: {i.find("a").text}')
 
 # https://www.melon.com/chart/index.htm
     @staticmethod
@@ -27,13 +37,9 @@ class Melon(object):
             elif menu == '1':
                 mel.url = input("Input URL")
             elif menu == '2':
-                print(f'Input URL is {mel.url} 입니다.')
-                hdr = {'User-Agent': 'Mozilla/5.0'}
-                req = urllib.request.Request(mel.url, headers=hdr)
-                soup = BeautifulSoup(urllib.request.urlopen(req).read(), 'lxml')
-
-                Melon.printRanking(soup, "ellipsis rank01", 'title')
-                Melon.printRanking(soup, "ellipsis rank02", 'artist')
+                mel.class_name.append('ellipsis rank01')
+                mel.class_name.append('ellipsis rank02')
+                mel.printRanking()
             else:
                 print('Wrong Number')
                 continue
