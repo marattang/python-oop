@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
-from requests_html import HTMLSession
 
 class Stock(object):
     url = ''
@@ -18,13 +17,20 @@ class Stock(object):
                 pass
             else :
                 self.keyword.append(i.find("a").text)
+                print(type(i.find("a")))
                 count += 1
-            if i.find("span", class_="tah p11 red01") == None:
-                pass
-            else :
+            if type(i.find("span", class_="tah p11 red01")) == 'bs4.element.Tag':
                 self.rate.append(i.find("span", class_="tah p11 red01").text.replace("\t", "\n").replace("\n", ""))
+            elif type(i.find("span", class_="tah p11 nv01")) == 'bs4.element.Tag':
+                self.rate.append(i.find("span", class_="tah p11 nv01").text.replace("\t", "\n").replace("\n", ""))
+            elif type(i.find("span", class_="tah p11")) == 'bs4.element.Tag':
+                self.rate.append(i.find("span", class_="tah p11").text.replace("\t", "\n").replace("\n", ""))
+            else:
+                pass
 
-        return self.keyword, self.rate
+
+        for i in range(len(self.keyword)):
+            print(f'{i}위 종목 : {self.keyword[i]} 등락률 : {self.rate[i]}')
 
 # https://finance.naver.com/sise/lastsearch2.nhn
     @staticmethod
@@ -42,9 +48,7 @@ class Stock(object):
                 stock.url = input('Input URL')
 
             elif menu == '2':
-                stock.search.append('stock_name')
-                stock.search.append('rate')
-                print(stock.printRanking())
+                stock.printRanking()
 
             else:
                 input('Wrong Number')
