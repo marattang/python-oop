@@ -17,14 +17,13 @@ class Stock(object):
                 pass
             else :
                 self.keyword.append(i.find("a").text)
-                print(type(i.find("a")))
                 count += 1
-            if type(i.find("span", class_="tah p11 red01")) == 'bs4.element.Tag':
+            if i.find("span", class_="tah p11 red01") != None:
                 self.rate.append(i.find("span", class_="tah p11 red01").text.replace("\t", "\n").replace("\n", ""))
-            elif type(i.find("span", class_="tah p11 nv01")) == 'bs4.element.Tag':
-                self.rate.append(i.find("span", class_="tah p11 nv01").text.replace("\t", "\n").replace("\n", ""))
-            elif type(i.find("span", class_="tah p11")) == 'bs4.element.Tag':
-                self.rate.append(i.find("span", class_="tah p11").text.replace("\t", "\n").replace("\n", ""))
+            elif i.find("span", class_="tah p11 nv01") != None:
+                self.rate.append(i.find_all("span", class_="tah p11 nv01")[1].text.replace("\t", "\n").replace("\n", ""))
+            elif i.find("span", class_="tah p11") != None:
+                self.rate.append(i.find_all("span", class_="tah p11")[1].text.replace("\t", "\n").replace("\n", ""))
             else:
                 pass
 
